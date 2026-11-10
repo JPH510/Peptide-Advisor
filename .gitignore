@@ -1,0 +1,30 @@
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated corpus artifacts — large, rebuildable, and personal
+android/app/src/main/assets/corpus.jsonl
+android/app/src/main/assets/corpus_vectors.bin
+android/app/src/main/assets/embedder.tflite
+android/tools/corpus.jsonl
+android/tools/corpus_vectors.bin
+
+# Secrets
+.env
+*.secret
+
+.DS_Store

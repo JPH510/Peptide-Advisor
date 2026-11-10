@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Peptide Advisor</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1024 1024%22%3E %3C%21-- Background: deep bench green-black, the app's dark-mode surface --%3E %3Crect width=%221024%22 height=%221024%22 rx=%22224%22 fill=%22%231A1F1B%22/%3E %3Cg transform=%22translate%28512 512%29 rotate%28-35%29 translate%28-512 -512%29%22%3E %3C%21-- Vial glass --%3E %3Crect x=%22372%22 y=%22286%22 width=%22280%22 height=%22520%22 rx=%2254%22 fill=%22%232A312B%22 stroke=%22%23EDEFEA%22 stroke-width=%2230%22/%3E %3C%21-- Amber reagent, filled to a stop line --%3E %3CclipPath id=%22glass%22%3E%3Crect x=%22387%22 y=%22301%22 width=%22250%22 height=%22490%22 rx=%2240%22/%3E%3C/clipPath%3E %3Crect x=%22387%22 y=%22500%22 width=%22250%22 height=%22300%22 fill=%22%23D9A03F%22 clip-path=%22url%28%23glass%29%22/%3E %3C%21-- Meniscus / stop line: the line you read --%3E %3Crect x=%22352%22 y=%22488%22 width=%22320%22 height=%2224%22 rx=%2212%22 fill=%22%23F4C46A%22/%3E %3C%21-- Graduations --%3E %3Cg fill=%22%23EDEFEA%22 opacity=%220.9%22%3E %3Crect x=%22432%22 y=%22372%22 width=%2270%22 height=%2214%22 rx=%227%22/%3E %3Crect x=%22432%22 y=%22430%22 width=%2240%22 height=%2214%22 rx=%227%22/%3E %3Crect x=%22432%22 y=%22586%22 width=%2270%22 height=%2214%22 rx=%227%22 fill=%22%231A1F1B%22 opacity=%220.55%22/%3E %3Crect x=%22432%22 y=%22644%22 width=%2240%22 height=%2214%22 rx=%227%22 fill=%22%231A1F1B%22 opacity=%220.55%22/%3E %3Crect x=%22432%22 y=%22702%22 width=%2270%22 height=%2214%22 rx=%227%22 fill=%22%231A1F1B%22 opacity=%220.55%22/%3E %3C/g%3E %3C%21-- Teal reagent cap --%3E %3Crect x=%22396%22 y=%22196%22 width=%22232%22 height=%22104%22 rx=%2226%22 fill=%22%235FAE97%22/%3E %3Crect x=%22396%22 y=%22196%22 width=%22232%22 height=%2234%22 rx=%2217%22 fill=%22%237CC4AE%22/%3E %3C/g%3E %3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<meta name="theme-color" content="#1A1F1B">
+<style>
+  :root{
+    --bench:#E9EBE6; --paper:#F7F8F5; --ink:#191C18; --steel:#6E756B;
+    --amber:#B87A18; --signal:#2C6153; --signalM:#5A8A7E; --caution:#A34031; --hairline:#D2D6CD;
+    --serif:Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono","Roboto Mono",monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bench:#141714;--paper:#1E221E;--ink:#EDEFEA;--steel:#9AA296;
+          --amber:#D9A03F;--signal:#5FAE97;--signalM:#76998F;--caution:#E0705C;--hairline:#2E332E;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bench);color:var(--ink);font-family:var(--sans);
+       font-size:15px;line-height:1.55;-webkit-tap-highlight-color:transparent}
+  .wrap{max-width:460px;margin:0 auto;padding:0 14px 60px}
+  h1{font-family:var(--serif);font-size:21px;font-weight:600;margin:16px 0 2px}
+  .sub{color:var(--steel);font-size:12px;margin:0 0 10px}
+
+  /* Tabs: radio + CSS, so switching works even before scripts run */
+  .tabs{display:flex;gap:2px;position:sticky;top:0;background:var(--bench);
+        padding:6px 0 0;border-bottom:1px solid var(--hairline);z-index:5}
+  .tabs label{flex:1;text-align:center;padding:9px 2px;font-size:13px;font-weight:500;
+              color:var(--steel);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  input[name=tab]{position:absolute;opacity:0;pointer-events:none}
+  .panel{display:none;padding-top:6px}
+  #t1:checked ~ .tabs label[for=t1],#t2:checked ~ .tabs label[for=t2],
+  #t3:checked ~ .tabs label[for=t3],#t4:checked ~ .tabs label[for=t4]{
+    color:var(--amber);border-bottom-color:var(--amber);font-weight:600}
+  #t1:checked ~ #p1,#t2:checked ~ #p2,#t3:checked ~ #p3,#t4:checked ~ #p4{display:block}
+
+  .card{background:var(--paper);border:1px solid var(--hairline);border-radius:10px;
+        padding:13px;margin:0 0 12px}
+  .lbl{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;
+       color:var(--steel);margin:18px 0 8px}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .muted{color:var(--steel)}
+  .warn{color:var(--caution)}
+  .hidden{display:none !important}
+  .note{font-size:12px;color:var(--steel);border-left:2px solid var(--hairline);
+        padding:6px 0 6px 11px;margin:10px 0}
+
+  .btn{display:inline-block;font-size:14px;font-weight:600;padding:10px 16px;border-radius:10px;
+       border:0;background:var(--amber);color:var(--paper);cursor:pointer;font-family:var(--sans)}
+  .btn.ghost{background:var(--hairline);color:var(--ink);font-weight:500}
+  .btn.small{font-size:13px;padding:7px 12px}
+  .btn:disabled{opacity:.45}
+  .linkbtn{background:none;border:0;padding:0;color:var(--amber);font-size:13px;
+           font-weight:500;cursor:pointer;font-family:var(--sans)}
+
+  textarea,input[type=text]{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);
+    background:var(--paper);border:1px solid var(--hairline);border-radius:10px;padding:11px 12px}
+  textarea:focus,input[type=text]:focus{outline:none;border-color:var(--amber)}
+  textarea{resize:vertical;min-height:64px}
+  input[type=range]{width:100%;accent-color:var(--amber);height:28px;margin:2px 0}
+
+  .field{margin-bottom:12px}
+  .field .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+  .field .val{font-family:var(--mono);font-size:18px;font-weight:600}
+  .mini{display:inline-block;background:var(--hairline);border:0;border-radius:7px;
+        font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink);
+        padding:4px 13px;cursor:pointer;margin-left:6px}
+
+  .badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid}
+  .b-rct{color:var(--signal);border-color:var(--signal);background:rgba(44,97,83,.12)}
+  .b-obs{color:var(--signalM);border-color:var(--signalM);background:rgba(90,138,126,.12)}
+  .b-ani{color:var(--amber);border-color:var(--amber);background:rgba(184,122,24,.12)}
+  .b-vit{color:var(--steel);border-color:var(--steel);background:rgba(110,117,107,.12)}
+
+  .answer{margin-bottom:18px}
+  .answer .q{font-family:var(--serif);font-size:17px;font-weight:600;margin:0 0 2px}
+  .answer .when{font-size:11px;color:var(--steel);margin:0 0 8px}
+  .answer p{margin:0 0 10px}
+  .bl{font-family:var(--serif)}
+  .status{font-size:13px;color:var(--steel);margin:8px 0}
+  .status.err{color:var(--caution)}
+
+  .big{font-family:var(--mono);font-size:42px;font-weight:600;line-height:1}
+  .big.warnv{color:var(--caution)}
+  .syr{width:100%;height:62px;display:block;margin:4px 0}
+
+  .lvl{height:6px;border-radius:3px;background:var(--hairline);overflow:hidden;margin:8px 0 6px}
+  .lvl i{display:block;height:100%;background:var(--signal)}
+  .row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0}
+  .row+.row{border-top:1px solid var(--hairline)}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0 2px}
+  .chip{font-size:12px;font-weight:500;padding:6px 11px;border-radius:999px;cursor:pointer;
+        background:var(--hairline);color:var(--ink);border:0;font-family:var(--sans)}
+  .chip.on{background:var(--signal);color:var(--paper);font-weight:600}
+  .stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:4px}
+  .stat small{display:block;font-size:10px;font-weight:600;letter-spacing:.5px;
+              text-transform:uppercase;color:var(--steel)}
+  .stat b{font-family:var(--mono);font-size:15px}
+  .cardhead{display:flex;align-items:baseline;gap:8px}
+  .cardhead b{flex:1}
+  .actions{display:flex;gap:14px;margin-top:9px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Peptide Advisor</h1>
+  <p class="sub">Literature answers · dose math · your log</p>
+
+  <input type="radio" name="tab" id="t1" checked>
+  <input type="radio" name="tab" id="t2">
+  <input type="radio" name="tab" id="t3">
+  <input type="radio" name="tab" id="t4">
+
+  <div class="tabs">
+    <label for="t1">Ask</label>
+    <label for="t2">Calc</label>
+    <label for="t3">Log</label>
+    <label for="t4">Vendors</label>
+  </div>
+
+  <!-- ============ ASK ============ -->
+  <div class="panel" id="p1">
+    <div style="margin-top:12px">
+      <textarea id="q" placeholder="e.g. NAD+ oral vs injection — what does the evidence actually show?"></textarea>
+      <div style="display:flex;align-items:center;gap:12px;margin-top:8px">
+        <button class="btn" id="askBtn" onclick="ask()">Ask</button>
+        <span class="muted" style="font-size:11px">Searches live literature · takes 10–30s</span>
+      </div>
+      <div class="status hidden" id="askStatus"></div>
+    </div>
+    <div id="answers"></div>
+    <div id="askEmpty">
+      <p class="note">Answers come from a live search of the literature, not from memory. Every effect claim is tagged with what's behind it — human RCT, human observational, animal, in vitro — because "improves healing" means something different when the support is four rat studies.</p>
+    </div>
+  </div>
+
+  <!-- ============ CALC ============ -->
+  <div class="panel" id="p2">
+    <div style="margin-top:12px">
+      <div class="big" id="cUnits">10</div>
+      <div class="muted" style="font-size:13px;margin-bottom:2px">units on a U-100 syringe</div>
+      <svg class="syr" viewBox="0 0 400 62"><g id="cSyr"></g></svg>
+      <div class="num muted" style="font-size:12px" id="cDerived"></div>
+    </div>
+
+    <div class="card field" style="margin-top:14px">
+      <div class="top"><span class="lbl" style="margin:0">Vial contents</span>
+        <span><span class="val" id="cMgV">5 mg</span>
+          <button class="mini" onclick="bump('cMg',-0.5)">&minus;</button><button class="mini" onclick="bump('cMg',0.5)">+</button></span></div>
+      <input type="range" id="cMg" min="0.5" max="100" step="0.5" value="5" oninput="calcRender()">
+    </div>
+    <div class="card field">
+      <div class="top"><span class="lbl" style="margin:0">Bacteriostatic water</span>
+        <span><span class="val" id="cMlV">2 mL</span>
+          <button class="mini" onclick="bump('cMl',-0.25)">&minus;</button><button class="mini" onclick="bump('cMl',0.25)">+</button></span></div>
+      <input type="range" id="cMl" min="0.25" max="10" step="0.25" value="2" oninput="calcRender()">
+    </div>
+    <div class="card field">
+      <div class="top"><span class="lbl" style="margin:0">Dose</span>
+        <span><span class="val" id="cDoseV">250 mcg</span>
+          <button class="mini" onclick="bump('cDose',-25)">&minus;</button><button class="mini" onclick="bump('cDose',25)">+</button></span></div>
+      <input type="range" id="cDose" min="5" max="3000" step="5" value="250" oninput="calcRender()">
+    </div>
+
+    <div class="card hidden" id="cWarn" style="border-color:var(--caution)">
+      <p class="lbl warn" style="margin:0 0 6px">Check this draw</p>
+      <p style="margin:0 0 8px;font-size:14px" id="cWarnMsg"></p>
+      <button class="linkbtn hidden" id="cFix" onclick="applyFix()"></button>
+    </div>
+
+    <p class="lbl">At this mix</p>
+    <div class="card">
+      <div class="row"><span class="muted">Per unit</span><span class="num" id="cPerU"></span></div>
+      <div class="row"><span class="muted">Full doses in vial</span><span class="num" id="cDoses"></span></div>
+      <div class="row"><span class="muted">Concentration</span><span class="num" id="cConc"></span></div>
+    </div>
+    <p class="note">A U-100 syringe reads 100 units to 1 mL. Everything above comes from that identity — nothing is estimated.</p>
+  </div>
+
+  <!-- ============ LOG ============ -->
+  <div class="panel" id="p3">
+    <div class="status" id="storageNote" style="margin-top:10px">Loading saved data…</div>
+
+    <button class="btn small" onclick="openPanel('pnlVial')">Add vial</button>
+
+    <div class="card hidden" id="pnlVial" style="margin-top:12px">
+      <p class="lbl" style="margin:0 0 8px">New vial</p>
+      <div class="field"><input type="text" id="vName" placeholder="Compound, e.g. BPC-157"></div>
+      <div class="field">
+        <div class="top"><span class="muted" style="font-size:12px">Label claim</span>
+          <span><span class="val" id="vMgV">5 mg</span>
+            <button class="mini" onclick="bump('vMg',-0.5)">&minus;</button><button class="mini" onclick="bump('vMg',0.5)">+</button></span></div>
+        <input type="range" id="vMg" min="0.5" max="100" step="0.5" value="5" oninput="lbl('vMgV', trim(val('vMg'),1)+' mg')">
+      </div>
+      <div class="field"><input type="text" id="vLot" placeholder="Lot number (optional)"></div>
+      <div class="field"><input type="text" id="vVendor" placeholder="Vendor (optional)"></div>
+      <div class="actions">
+        <button class="btn small" onclick="saveVial()">Add vial</button>
+        <button class="btn small ghost" onclick="openPanel(null)">Cancel</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="pnlMix" style="margin-top:12px">
+      <p class="lbl" style="margin:0 0 2px">Reconstitute <span id="mixName"></span></p>
+      <div class="field">
+        <div class="top"><span class="muted" style="font-size:12px">Bacteriostatic water</span>
+          <span><span class="val" id="mMlV">2 mL</span>
+            <button class="mini" onclick="bump('mMl',-0.25);mixPreview()">&minus;</button><button class="mini" onclick="bump('mMl',0.25);mixPreview()">+</button></span></div>
+        <input type="range" id="mMl" min="0.25" max="10" step="0.25" value="2" oninput="mixPreview()">
+      </div>
+      <p class="num muted" style="font-size:13px" id="mixOut"></p>
+      <div class="actions">
+        <button class="btn small" onclick="saveMix()">Save mix</button>
+        <button class="btn small ghost" onclick="openPanel(null)">Cancel</button>
+      </div>
+    </div>
+
+    <div class="card hidden" id="pnlDose" style="margin-top:12px">
+      <p class="lbl" style="margin:0 0 2px">Log dose · <span id="doseName"></span></p>
+      <div class="big" id="dUnits" style="font-size:34px">10</div>
+      <div class="muted" style="font-size:12px">units</div>
+      <svg class="syr" viewBox="0 0 400 62"><g id="dSyr"></g></svg>
+      <div class="field">
+        <div class="top"><span class="muted" style="font-size:12px">Dose</span>
+          <span><span class="val" id="dMcgV">250 mcg</span>
+            <button class="mini" onclick="bump('dMcg',-25);dosePreview()">&minus;</button><button class="mini" onclick="bump('dMcg',25);dosePreview()">+</button></span></div>
+        <input type="range" id="dMcg" min="5" max="3000" step="5" value="250" oninput="dosePreview()">
+      </div>
+      <p class="status warn hidden" id="dWarn" style="margin:0 0 8px"></p>
+      <p class="lbl" style="margin:8px 0 2px">Site</p>
+      <div class="chips" id="siteChips"></div>
+      <div class="actions">
+        <button class="btn small" onclick="saveDose()">Log dose</button>
+        <button class="btn small ghost" onclick="openPanel(null)">Cancel</button>
+      </div>
+    </div>
+
+    <p class="lbl">Open vials</p>
+    <div id="vials"></div>
+
+    <div id="doseBlock">
+      <p class="lbl">Recent doses</p>
+      <div class="card" id="doses"></div>
+    </div>
+
+    <p style="margin-top:26px"><button class="linkbtn warn" id="resetBtn" onclick="resetAll()">Reset app data</button></p>
+  </div>
+
+  <!-- ============ VENDORS ============ -->
+  <div class="panel" id="p4">
+    <p class="note" style="margin-top:12px">Records are kept per lot, and only independently commissioned tests count toward a vendor's stats. A certificate from the seller's own lab describes a batch you didn't receive.</p>
+
+    <button class="btn small" onclick="openPanel('pnlAssay')">Add assay</button>
+
+    <div class="card hidden" id="pnlAssay" style="margin-top:12px">
+      <p class="lbl" style="margin:0 0 8px">New assay</p>
+      <div class="field"><input type="text" id="aVendor" placeholder="Vendor"></div>
+      <div class="field"><input type="text" id="aCompound" placeholder="Compound"></div>
+      <div class="field"><input type="text" id="aLot" placeholder="Lot number"></div>
+      <div class="field"><input type="text" id="aLab" placeholder="Testing lab (e.g. Janoshik)"></div>
+      <div class="chips">
+        <button class="chip on" id="aInd" onclick="toggleInd()">Independently commissioned</button>
+      </div>
+      <div class="field">
+        <div class="top"><span class="muted" style="font-size:12px">Label claim</span>
+          <span><span class="val" id="aLabelV">5 mg</span>
+            <button class="mini" onclick="bump('aLabel',-0.5);assayPreview()">&minus;</button><button class="mini" onclick="bump('aLabel',0.5);assayPreview()">+</button></span></div>
+        <input type="range" id="aLabel" min="0.5" max="100" step="0.5" value="5" oninput="assayPreview(true)">
+      </div>
+      <div class="field">
+        <div class="top"><span class="muted" style="font-size:12px">Measured content</span>
+          <span><span class="val" id="aMeasV">5 mg</span>
+            <button class="mini" onclick="measTouched=true;bump('aMeas',-0.05);assayPreview()">&minus;</button><button class="mini" onclick="measTouched=true;bump('aMeas',0.05);assayPreview()">+</button></span></div>
+        <input type="range" id="aMeas" min="0" max="100" step="0.05" value="5" oninput="measTouched=true;assayPreview()">
+      </div>
+      <div class="field">
+        <div class="top"><span class="muted" style="font-size:12px">Purity</span>
+          <span><span class="val" id="aPurV">98%</span>
+            <button class="mini" onclick="bump('aPur',-0.1);assayPreview()">&minus;</button><button class="mini" onclick="bump('aPur',0.1);assayPreview()">+</button></span></div>
+        <input type="range" id="aPur" min="50" max="100" step="0.1" value="98" oninput="assayPreview()">
+      </div>
+      <p class="num" style="font-size:13px" id="aOut"></p>
+      <div class="actions">
+        <button class="btn small" onclick="saveAssay()">Save assay</button>
+        <button class="btn small ghost" onclick="openPanel(null)">Cancel</button>
+      </div>
+    </div>
+
+    <p class="lbl">Vendors</p>
+    <div id="vendorList"></div>
+  </div>
+
+</div>
+
+<script>
+'use strict';
+
+/* ================= state & storage ================= */
+const KEY='peptide-advisor-v1';
+let db={vials:[],doses:[],assays:[],answers:[]};
+let storageOK=false, busy=false, activeVialId=null, doseSite='Abdomen L', assayInd=true, measTouched=false, resetArmed=false;
+const SITES=['Abdomen L','Abdomen R','Thigh L','Thigh R','Deltoid L','Deltoid R','Glute','Other'];
+
+function save(){
+  if(!storageOK||!window.storage) return;
+  try{ window.storage.set(KEY, JSON.stringify(db)).catch(function(){}); }catch(e){}
+}
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+
+/* ================= helpers ================= */
+function el(id){ return document.getElementById(id); }
+function val(id){ return parseFloat(el(id).value); }
+function lbl(id,text){ el(id).textContent=text; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function trim(n,p){ if(!isFinite(n))return '—';
+  var s=n.toFixed(p); if(s.indexOf('.')<0)return s;
+  return s.replace(/0+$/,'').replace(/\.$/,''); }
+function bump(id,step){
+  var i=el(id), v=Math.min(Math.max(val(id)+step, parseFloat(i.min)), parseFloat(i.max));
+  i.value=v;
+  i.dispatchEvent(new Event('input'));
+}
+function when(ts){ return new Date(ts).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+/* ================= dosing math (same identity as everywhere in this project) ================= */
+function mgml(mg,ml){ return ml>0? mg/ml : 0; }
+function mcgPerUnit(mg,ml){ return mgml(mg,ml)*1000*0.01; }
+function unitsFor(mg,ml,dose){ var u=mcgPerUnit(mg,ml); return u>0? dose/u : 0; }
+function warnFor(mg,ml,dose){
+  if(mg<=0||ml<=0) return 'NOT_MIXED';
+  var u=unitsFor(mg,ml,dose);
+  if(u>100) return 'OVER'; if(u>0&&u<2) return 'LOW'; return null;
+}
+function suggestMl(mg,dose){
+  if(dose<=0||mg<=0) return null;
+  var targets=[10,5,2.5];
+  for(var i=0;i<targets.length;i++){
+    var ml=(targets[i]*0.01)*((mg*1000)/dose);
+    if(ml>=0.25&&ml<=10) return {ml:Math.round(ml*4)/4, units:targets[i]};
+  }
+  return null;
+}
+var WARN={LOW:'Under 2 units — measurement error at this mark is large. Add more diluent so the same dose lands higher on the barrel.',
+          OVER:"Over 100 units — this dose won't fit in one U-100 syringe. Mix more concentrated or split the draw.",
+          NOT_MIXED:'Set a diluent volume first.'};
+
+/* ================= drawn syringe ================= */
+function drawSyringe(gid, units, suspect){
+  var g=el(gid); if(!g)return;
+  var W=400, flange=14, needle=26, left=flange+6, right=W-needle, width=right-left, top=8, h=30;
+  var mark=suspect?'var(--caution)':'var(--amber)';
+  var frac=Math.max(0,Math.min(units/100,1)), s='';
+  s+='<rect x="'+left+'" y="'+top+'" width="'+width+'" height="'+h+'" rx="3" fill="var(--paper)" stroke="var(--hairline)"/>';
+  if(frac>0){
+    var fw=width*frac, x=left+fw;
+    s+='<rect x="'+left+'" y="'+top+'" width="'+fw+'" height="'+h+'" rx="3" fill="'+mark+'" fill-opacity="0.28"/>';
+    s+='<line x1="'+x+'" y1="'+(top-4)+'" x2="'+x+'" y2="'+(top+h+4)+'" stroke="'+mark+'" stroke-width="2"/>';
+  }
+  for(var u=0;u<=100;u+=2){
+    var tx=left+width*u/100, maj=(u%10===0), len=maj?11:6;
+    s+='<line x1="'+tx+'" y1="'+(top+h)+'" x2="'+tx+'" y2="'+(top+h-len)+'" stroke="var(--steel)" stroke-opacity="'+(maj?1:0.45)+'" stroke-width="'+(maj?1.2:0.8)+'"/>';
+  }
+  for(var n=0;n<=100;n+=20){
+    var nx=left+width*n/100;
+    s+='<text x="'+nx+'" y="'+(top+h+15)+'" text-anchor="middle" fill="var(--steel)" font-size="9" font-family="monospace">'+n+'</text>';
+  }
+  s+='<rect x="0" y="'+(top-5)+'" width="'+flange+'" height="'+(h+10)+'" rx="2" fill="var(--steel)" fill-opacity="0.35"/>';
+  s+='<line x1="'+right+'" y1="'+(top+h/2)+'" x2="'+(W-2)+'" y2="'+(top+h/2)+'" stroke="var(--steel)" stroke-width="1.5"/>';
+  s+='<rect x="'+(right-1)+'" y="'+(top+7)+'" width="7" height="16" rx="1" fill="var(--steel)" fill-opacity="0.5"/>';
+  g.innerHTML=s;
+}
+
+/* ================= ASK ================= */
+var SYSTEM='You are the Ask feature of a personal peptide-research app for one technical adult user. '+
+'Use web search to find primary literature (PubMed, ClinicalTrials.gov, peer-reviewed journals) before answering; prefer primary sources over blogs, clinics, and vendor pages, which have commercial bias.\n\n'+
+'Rules, in priority order:\n'+
+'1. Carry the evidence tier into every claim. Never write "improves X" when the support is animal work — write "improved X in rats (n=48, 2011)". Name species and sample size for effect claims.\n'+
+'2. Lead with what the evidence does NOT establish when that is the honest headline.\n'+
+'3. Dosing: state doses only if human studies used them, with attribution. If only animal dosing exists, say so plainly — do not convert it to a human dose. Never invent protocols, stacks, or schedules.\n'+
+'4. Note regulatory status where relevant (approved drug, prescription-only, research chemical, WADA-banned).\n'+
+'5. If sources conflict, present both and say which has the stronger design.\n'+
+'6. Short paragraphs, no filler, no sales language.\n\n'+
+'End with exactly this structure: a line starting "Bottom line:" (one sentence, what is actually established), then a line "Sources:", then 2-5 sources, one per line, each starting with a tier tag in brackets — [Human RCT], [Human controlled], [Human observational], [Review], [Case report], [Animal], or [In vitro] — followed by a short reference.';
+
+async function ask(){
+  var q=el('q').value.trim();
+  if(!q||busy) return;
+  busy=true;
+  el('askBtn').disabled=true;
+  var st=el('askStatus');
+  st.classList.remove('hidden','err');
+  st.textContent='Searching the literature…';
+  try{
+    var res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-6',
+        max_tokens:1000,
+        system:SYSTEM,
+        messages:[{role:'user',content:q}],
+        tools:[{type:'web_search_20250305',name:'web_search'}]
+      })
+    });
+    if(!res.ok){ throw new Error('the service returned '+res.status); }
+    var data=await res.json();
+    var text=(data.content||[]).filter(function(b){return b.type==='text';})
+      .map(function(b){return b.text;}).join('\n').trim();
+    if(!text){ throw new Error('an empty response came back'); }
+    db.answers.unshift({q:q, text:text, ts:Date.now()});
+    db.answers=db.answers.slice(0,10);
+    save();
+    el('q').value='';
+    st.classList.add('hidden');
+    renderAnswers();
+  }catch(e){
+    st.classList.add('err');
+    st.textContent='Couldn\u2019t get an answer — '+(e&&e.message?e.message:'network problem')+'. Try again.';
+  }
+  busy=false;
+  el('askBtn').disabled=false;
+}
+
+function renderAnswerText(t){
+  var h=esc(t);
+  var tiers={'Human RCT':'b-rct','Human controlled':'b-rct','Human observational':'b-obs',
+             'Review':'b-obs','Case report':'b-ani','Animal':'b-ani','In vitro':'b-vit'};
+  for(var k in tiers){
+    h=h.split('['+k+']').join('<span class="badge '+tiers[k]+'">'+k+'</span>');
+  }
+  h=h.replace(/Bottom line:/g,'<b class="bl">Bottom line:</b>');
+  h=h.replace(/\n?Sources:\s*\n?/,'\n\n<span class="lbl" style="display:block;margin:4px 0 4px">Sources</span>');
+  return h.split(/\n{2,}/).map(function(p){
+    return '<p>'+p.replace(/\n/g,'<br>')+'</p>';
+  }).join('');
+}
+
+function renderAnswers(){
+  var list=db.answers||[];
+  el('askEmpty').classList.toggle('hidden', list.length>0);
+  el('answers').innerHTML=list.map(function(a){
+    return '<div class="answer"><p class="q">'+esc(a.q)+'</p>'+
+      '<p class="when">'+when(a.ts)+'</p>'+renderAnswerText(a.text)+'</div>';
+  }).join('<hr style="border:0;border-top:1px solid var(--hairline);margin:16px 0">');
+}
+
+/* ================= CALCULATOR ================= */
+function calcRender(){
+  var mg=val('cMg'), ml=val('cMl'), dose=val('cDose');
+  var u=unitsFor(mg,ml,dose), w=warnFor(mg,ml,dose);
+  lbl('cMgV', trim(mg,1)+' mg'); lbl('cMlV', trim(ml,2)+' mL'); lbl('cDoseV', trim(dose,0)+' mcg');
+  var big=el('cUnits'); big.textContent=trim(u,1); big.classList.toggle('warnv', !!w);
+  lbl('cDerived', trim(dose,0)+' mcg · '+trim(u*0.01,3)+' mL · '+trim(mgml(mg,ml),2)+' mg/mL');
+  lbl('cPerU', trim(mcgPerUnit(mg,ml),1)+' mcg');
+  lbl('cDoses', dose>0? String(Math.floor(mg*1000/dose)) : '—');
+  lbl('cConc', trim(mgml(mg,ml)*1000,0)+' mcg/mL');
+  drawSyringe('cSyr', u, !!w);
+  var box=el('cWarn'), fix=el('cFix');
+  if(w){
+    box.classList.remove('hidden');
+    lbl('cWarnMsg', WARN[w]);
+    var s=suggestMl(mg,dose);
+    if(w!=='NOT_MIXED' && s){
+      fix.classList.remove('hidden');
+      fix.textContent='Use '+trim(s.ml,2)+' mL instead — puts this dose at '+trim(s.units,1)+' units';
+      fix.dataset.ml=String(s.ml);
+    } else fix.classList.add('hidden');
+  } else box.classList.add('hidden');
+}
+function applyFix(){
+  el('cMl').value=el('cFix').dataset.ml;
+  calcRender();
+}
+
+/* ================= LOG ================= */
+function openPanel(name){
+  ['pnlVial','pnlMix','pnlDose','pnlAssay'].forEach(function(p){ el(p).classList.add('hidden'); });
+  if(name) el(name).classList.remove('hidden');
+}
+function findVial(id){ for(var i=0;i<db.vials.length;i++) if(db.vials[i].id===id) return db.vials[i]; return null; }
+function drawn(v){ return db.doses.filter(function(d){return d.vialId===v.id;})
+  .reduce(function(a,d){return a+d.mcg;},0); }
+function remaining(v){ return Math.max(0, v.mg*1000 - drawn(v)); }
+function lastDose(v){ var ds=db.doses.filter(function(d){return d.vialId===v.id;}); return ds.length? ds[0].mcg : 250; }
+function pastUseBy(v){ return v.reconstitutedAt? (Date.now() > v.reconstitutedAt + 28*86400000) : false; }
+
+function saveVial(){
+  var name=el('vName').value.trim();
+  if(!name) return;
+  db.vials.unshift({id:uid(), compound:name, mg:val('vMg'), lot:el('vLot').value.trim(),
+                    vendor:el('vVendor').value.trim(), diluentMl:null, reconstitutedAt:null,
+                    discardedAt:null, createdAt:Date.now()});
+  save();
+  el('vName').value=''; el('vLot').value=''; el('vVendor').value='';
+  openPanel(null); renderLog();
+}
+
+function openMix(id){
+  var v=findVial(id); if(!v)return;
+  activeVialId=id;
+  lbl('mixName', v.compound);
+  el('mMl').value = v.diluentMl || 2;
+  openPanel('pnlMix'); mixPreview();
+}
+function mixPreview(){
+  var v=findVial(activeVialId); if(!v)return;
+  var ml=val('mMl');
+  lbl('mMlV', trim(ml,2)+' mL');
+  lbl('mixOut', trim(mgml(v.mg,ml),2)+' mg/mL · '+trim(mcgPerUnit(v.mg,ml),1)+' mcg per unit');
+}
+function saveMix(){
+  var v=findVial(activeVialId); if(!v)return;
+  v.diluentMl=val('mMl');
+  if(!v.reconstitutedAt) v.reconstitutedAt=Date.now();
+  save(); openPanel(null); renderLog();
+}
+
+function openDose(id){
+  var v=findVial(id); if(!v||!v.diluentMl)return;
+  activeVialId=id;
+  lbl('doseName', v.compound);
+  var d=Math.min(Math.max(lastDose(v),5),3000);
+  el('dMcg').value=d;
+  renderSiteChips();
+  openPanel('pnlDose'); dosePreview();
+}
+function dosePreview(){
+  var v=findVial(activeVialId); if(!v)return;
+  var dose=val('dMcg'), u=unitsFor(v.mg,v.diluentMl,dose), w=warnFor(v.mg,v.diluentMl,dose);
+  lbl('dMcgV', trim(dose,0)+' mcg');
+  var big=el('dUnits'); big.textContent=trim(u,1); big.classList.toggle('warnv', !!w);
+  drawSyringe('dSyr', u, !!w);
+  var wl=el('dWarn');
+  if(w){ wl.classList.remove('hidden'); wl.textContent=WARN[w]; }
+  else wl.classList.add('hidden');
+}
+function renderSiteChips(){
+  el('siteChips').innerHTML=SITES.map(function(s){
+    return '<button class="chip'+(s===doseSite?' on':'')+'" onclick="setSite(\''+s+'\')">'+s+'</button>';
+  }).join('');
+}
+function setSite(s){ doseSite=s; renderSiteChips(); }
+function saveDose(){
+  var v=findVial(activeVialId); if(!v)return;
+  var dose=val('dMcg'), u=unitsFor(v.mg,v.diluentMl,dose);
+  db.doses.unshift({id:uid(), vialId:v.id, mcg:dose, units:Math.round(u*10)/10, site:doseSite, ts:Date.now()});
+  save(); openPanel(null); renderLog();
+}
+function discardVial(id){
+  var b=el('disc-'+id);
+  if(b && b.dataset.armed!=='1'){ b.dataset.armed='1'; b.textContent='sure?'; return; }
+  var v=findVial(id); if(v){ v.discardedAt=Date.now(); save(); renderLog(); }
+}
+
+function renderLog(){
+  var active=db.vials.filter(function(v){ return !v.discardedAt && remaining(v)>0; });
+  el('vials').innerHTML = active.length? active.map(function(v){
+    var mixed=!!v.diluentMl;
+    var sub=[trim(v.mg,1)+' mg'];
+    if(mixed){ sub.push(trim(mgml(v.mg,v.diluentMl),2)+' mg/mL'); sub.push(trim(mcgPerUnit(v.mg,v.diluentMl),1)+' mcg/u'); }
+    else sub.push('not reconstituted');
+    if(v.vendor) sub.push(v.vendor);
+    var frac=Math.round(remaining(v)/(v.mg*1000)*100);
+    var old=pastUseBy(v);
+    return '<div class="card">'+
+      '<div class="cardhead"><b>'+esc(v.compound)+'</b>'+
+        (old? '<span class="warn" style="font-size:11px;font-weight:600">Past use-by</span>':'')+'</div>'+
+      '<p class="num muted" style="font-size:12px;margin:3px 0 0">'+esc(sub.join(' · '))+'</p>'+
+      '<div class="lvl"><i style="width:'+frac+'%'+(old?';background:var(--caution)':'')+'"></i></div>'+
+      '<p class="num muted" style="font-size:11px;margin:0">'+trim(remaining(v),0)+' mcg left of '+trim(v.mg*1000,0)+'</p>'+
+      '<div class="actions">'+
+        (mixed? '<button class="linkbtn" onclick="openDose(\''+v.id+'\')">Log dose</button>':'')+
+        '<button class="linkbtn" onclick="openMix(\''+v.id+'\')">'+(mixed?'Re-mix':'Set mix')+'</button>'+
+        '<button class="linkbtn muted" id="disc-'+v.id+'" onclick="discardVial(\''+v.id+'\')">discard</button>'+
+      '</div></div>';
+  }).join('') : '<p class="muted" style="font-size:14px">Nothing open. Add a vial to start tracking concentration, draws, and what\u2019s left.</p>';
+
+  var ds=db.doses.slice(0,12);
+  el('doseBlock').classList.toggle('hidden', ds.length===0);
+  el('doses').innerHTML=ds.map(function(d){
+    var v=findVial(d.vialId);
+    return '<div class="row"><span>'+esc(v?v.compound:'—')+
+      '<br><span class="muted" style="font-size:11px">'+when(d.ts)+' · '+esc(d.site)+'</span></span>'+
+      '<span class="num" style="text-align:right"><b>'+trim(d.mcg,0)+' mcg</b>'+
+      '<br><span class="muted" style="font-size:11px">'+trim(d.units,1)+' u</span></span></div>';
+  }).join('');
+}
+
+async function resetAll(){
+  if(!resetArmed){
+    resetArmed=true;
+    el('resetBtn').textContent='Tap again to erase everything';
+    setTimeout(function(){ resetArmed=false; el('resetBtn').textContent='Reset app data'; }, 4000);
+    return;
+  }
+  db={vials:[],doses:[],assays:[],answers:[]};
+  try{ if(window.storage) await window.storage.set(KEY, JSON.stringify(db)); }catch(e){}
+  resetArmed=false; el('resetBtn').textContent='Reset app data';
+  renderAll();
+}
+
+/* ================= VENDORS ================= */
+function toggleInd(){
+  assayInd=!assayInd;
+  el('aInd').classList.toggle('on', assayInd);
+}
+function assayPreview(fromLabel){
+  if(fromLabel && !measTouched){ el('aMeas').value=el('aLabel').value; }
+  var label=val('aLabel'), meas=val('aMeas'), pur=val('aPur');
+  lbl('aLabelV', trim(label,1)+' mg'); lbl('aMeasV', trim(meas,2)+' mg'); lbl('aPurV', trim(pur,1)+'%');
+  var dev=label>0? (meas-label)/label*100 : 0;
+  var verdict=Math.abs(dev)<=5?'Matches label':(Math.abs(dev)<=15?'Minor deviation':'Off label claim');
+  el('aOut').innerHTML=(dev>0?'+':'')+trim(dev,1)+'% vs label · <span'+
+    (Math.abs(dev)>15?' class="warn"':'')+'>'+verdict+'</span>';
+}
+function saveAssay(){
+  var vendor=el('aVendor').value.trim(), compound=el('aCompound').value.trim();
+  if(!vendor||!compound) return;
+  db.assays.unshift({id:uid(), vendor:vendor, compound:compound, lot:el('aLot').value.trim(),
+    lab:el('aLab').value.trim(), independent:assayInd, label:val('aLabel'),
+    measured:val('aMeas'), purity:val('aPur'), ts:Date.now()});
+  save();
+  el('aVendor').value=''; el('aCompound').value=''; el('aLot').value=''; el('aLab').value='';
+  measTouched=false;
+  openPanel(null); renderVendors();
+}
+function renderVendors(){
+  var groups={};
+  db.assays.forEach(function(a){ (groups[a.vendor]=groups[a.vendor]||[]).push(a); });
+  var names=Object.keys(groups);
+  el('vendorList').innerHTML = names.length? names.map(function(name){
+    var all=groups[name], ind=all.filter(function(a){return a.independent;});
+    var mean=ind.length? ind.reduce(function(s,a){return s+a.purity;},0)/ind.length : null;
+    var worst=null;
+    ind.forEach(function(a){
+      var d=(a.measured-a.label)/a.label*100;
+      if(worst===null||Math.abs(d)>Math.abs(worst)) worst=d;
+    });
+    var rows=all.map(function(a){
+      var d=(a.measured-a.label)/a.label*100;
+      var verdict=Math.abs(d)<=5?'Matches label':(Math.abs(d)<=15?'Minor deviation':'Off label claim');
+      return '<p class="num muted" style="font-size:11px;margin:10px 0 2px">'+
+        esc(a.compound)+' · lot '+esc(a.lot||'—')+' · '+when(a.ts)+
+        (a.lab?' · '+esc(a.lab):'')+' · '+(a.independent?'independent':'seller\u2019s lab')+'</p>'+
+        '<p class="num" style="font-size:12px;margin:0'+(Math.abs(d)>15?';color:var(--caution)':'')+'">'+
+        trim(a.purity,1)+'% purity · '+trim(a.measured,2)+' of '+trim(a.label,1)+' mg · '+
+        (d>0?'+':'')+trim(d,1)+'% · '+verdict+'</p>';
+    }).join('');
+    return '<div class="card"><b>'+esc(name)+'</b>'+
+      '<div class="stats">'+
+        '<div class="stat"><small>Lots tested</small><b>'+ind.length+'</b></div>'+
+        (mean!==null?'<div class="stat"><small>Mean purity</small><b>'+trim(mean,1)+'%</b></div>':'')+
+        (worst!==null?'<div class="stat"><small>Worst vs label</small><b'+
+          (Math.abs(worst)>15?' class="warn"':' style="color:var(--signal)"')+'>'+
+          (worst>0?'+':'')+trim(worst,1)+'%</b></div>':'')+
+      '</div>'+rows+'</div>';
+  }).join('') : '<p class="muted" style="font-size:14px">No assays logged yet. What accumulates here is a record of whether each vendor\u2019s vials match their labels over time.</p>';
+}
+
+/* ================= boot ================= */
+function renderAll(){ renderAnswers(); calcRender(); renderLog(); renderVendors(); }
+
+(async function boot(){
+  renderAll();
+  var note=el('storageNote');
+  if(window.storage && window.storage.get){
+    try{
+      var r=await window.storage.get(KEY);
+      if(r && r.value){ var loaded=JSON.parse(r.value); db.vials=loaded.vials||[]; db.doses=loaded.doses||[];
+                        db.assays=loaded.assays||[]; db.answers=loaded.answers||[]; }
+      storageOK=true;
+    }catch(e){
+      try{ await window.storage.set(KEY, JSON.stringify(db)); storageOK=true; }
+      catch(e2){ storageOK=false; }
+    }
+  }
+  note.textContent = storageOK? '' : 'This view can\u2019t save — entries will last only while it\u2019s open.';
+  if(storageOK) note.classList.add('hidden');
+  renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose owns all styling; this exists only so the window has a background
+         before first frame and the splash doesn't flash white in dark mode. -->
+    <style name="Theme.PeptideAdvisor" parent="android:Theme.Material.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/bench</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Background: deep bench green-black, the app's dark-mode surface -->
+  
+  <g transform="translate(512 512) scale(0.70) rotate(-35) translate(-512 -512)">
+    <!-- Vial glass -->
+    <rect x="372" y="286" width="280" height="520" rx="54" fill="#2A312B" stroke="#EDEFEA" stroke-width="30"/>
+    <!-- Amber reagent, filled to a stop line -->
+    <clipPath id="glass"><rect x="387" y="301" width="250" height="490" rx="40"/></clipPath>
+    <rect x="387" y="500" width="250" height="300" fill="#D9A03F" clip-path="url(#glass)"/>
+    <!-- Meniscus / stop line: the line you read -->
+    <rect x="352" y="488" width="320" height="24" rx="12" fill="#F4C46A"/>
+    <!-- Graduations -->
+    <g fill="#EDEFEA" opacity="0.9">
+      <rect x="432" y="372" width="70" height="14" rx="7"/>
+      <rect x="432" y="430" width="40" height="14" rx="7"/>
+      <rect x="432" y="586" width="70" height="14" rx="7" fill="#1A1F1B" opacity="0.55"/>
+      <rect x="432" y="644" width="40" height="14" rx="7" fill="#1A1F1B" opacity="0.55"/>
+      <rect x="432" y="702" width="70" height="14" rx="7" fill="#1A1F1B" opacity="0.55"/>
+    </g>
+    <!-- Teal reagent cap -->
+    <rect x="396" y="196" width="232" height="104" rx="26" fill="#5FAE97"/>
+    <rect x="396" y="196" width="232" height="34" rx="17" fill="#7CC4AE"/>
+  </g>
+</svg>
