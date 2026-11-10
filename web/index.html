@@ -249,6 +249,26 @@
       <div class="card" id="doses"></div>
     </div>
 
+    <p class="lbl">Backup</p>
+    <div class="card">
+      <p class="muted" style="font-size:13px;margin:0">Your vials, doses, assays and saved answers live only inside this app. Export a copy now and then.</p>
+      <div class="actions" style="flex-wrap:wrap">
+        <button class="btn small" onclick="exportLog()">Export file</button>
+        <button class="btn small ghost" onclick="copyLog()">Copy as text</button>
+        <button class="btn small ghost" onclick="openRestore()">Restore</button>
+      </div>
+      <p class="status hidden" id="bkStatus" style="margin:10px 0 0"></p>
+      <div class="hidden" id="bkBox" style="margin-top:10px">
+        <textarea id="bkText" rows="6" style="font-family:var(--mono);font-size:11px"></textarea>
+        <div class="actions hidden" id="bkRestoreActions" style="flex-wrap:wrap">
+          <label class="btn small ghost" style="cursor:pointer">Choose file
+            <input type="file" accept=".json,application/json,text/plain" onchange="loadBackupFile(this)" style="display:none">
+          </label>
+          <button class="btn small" id="bkRestoreBtn" onclick="restoreLog()">Restore from backup</button>
+        </div>
+      </div>
+    </div>
+
     <p style="margin-top:26px"><button class="linkbtn warn" id="resetBtn" onclick="resetAll()">Reset app data</button></p>
   </div>
 
@@ -604,6 +624,99 @@ async function resetAll(){
   try{ if(window.storage) await window.storage.set(KEY, JSON.stringify(db)); }catch(e){}
   resetArmed=false; el('resetBtn').textContent='Reset app data';
   renderAll();
+}
+
+/* ================= BACKUP ================= */
+var restoreArmed=false;
+
+function backupJSON(){
+  return JSON.stringify({app:'peptide-advisor', version:1,
+    exportedAt:new Date().toISOString(), data:db}, null, 2);
+}
+function bkSay(msg, isErr){
+  var s=el('bkStatus'); s.classList.remove('hidden'); s.classList.toggle('err', !!isErr);
+  s.textContent=msg;
+}
+function counts(d){
+  return d.vials.length+' vials, '+d.doses.length+' doses, '+d.assays.length+' assays';
+}
+
+function exportLog(){
+  var json=backupJSON();
+  var name='peptide-advisor-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  try{
+    var url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
+    var a=document.createElement('a'); a.href=url; a.download=name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+    bkSay('Saved '+name+' ('+counts(db)+'). If no download appeared, use Copy as text instead.');
+  }catch(e){
+    copyLog();
+  }
+}
+
+function copyLog(){
+  var json=backupJSON();
+  el('bkRestoreActions').classList.add('hidden');
+  var done=function(){ bkSay('Copied ('+counts(db)+'). Paste it into a note or email to yourself.'); };
+  var manual=function(){
+    var box=el('bkBox'), t=el('bkText');
+    box.classList.remove('hidden'); t.value=json; t.focus(); t.select();
+    bkSay('Copying is blocked here — the backup is selected below. Long-press and copy it.');
+  };
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(json).then(function(){ el('bkBox').classList.add('hidden'); done(); }, manual);
+    } else manual();
+  }catch(e){ manual(); }
+}
+
+function openRestore(){
+  restoreArmed=false;
+  el('bkRestoreBtn').textContent='Restore from backup';
+  el('bkBox').classList.remove('hidden');
+  el('bkRestoreActions').classList.remove('hidden');
+  el('bkText').value=''; el('bkText').placeholder='Paste a backup here, or choose a file.';
+  bkSay('Restoring replaces everything currently in the app.');
+}
+
+function loadBackupFile(input){
+  var f=input.files && input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ el('bkText').value=String(r.result||''); bkSay('File loaded. Tap Restore from backup.'); };
+  r.onerror=function(){ bkSay('Couldn’t read that file.', true); };
+  r.readAsText(f);
+  input.value='';
+}
+
+function parseBackup(text){
+  var obj=JSON.parse(text);
+  var d=(obj && obj.data) ? obj.data : obj;
+  if(!d || !Array.isArray(d.vials) || !Array.isArray(d.doses))
+    throw new Error('this doesn’t look like a Peptide Advisor backup');
+  return { vials:d.vials, doses:d.doses,
+           assays:Array.isArray(d.assays)?d.assays:[],
+           answers:Array.isArray(d.answers)?d.answers:[] };
+}
+
+async function restoreLog(){
+  var parsed;
+  try{ parsed=parseBackup(el('bkText').value.trim()); }
+  catch(e){ bkSay('Can’t restore — '+(e.message||'the text isn’t valid')+'.', true); return; }
+  if(!restoreArmed){
+    restoreArmed=true;
+    el('bkRestoreBtn').textContent='Tap again to replace current data';
+    bkSay('Backup contains '+counts(parsed)+'. This replaces '+counts(db)+'.');
+    setTimeout(function(){ restoreArmed=false; el('bkRestoreBtn').textContent='Restore from backup'; }, 6000);
+    return;
+  }
+  db=parsed;
+  try{ if(window.storage) await window.storage.set(KEY, JSON.stringify(db)); }catch(e){}
+  restoreArmed=false;
+  el('bkRestoreBtn').textContent='Restore from backup';
+  el('bkBox').classList.add('hidden'); el('bkText').value='';
+  renderAll();
+  bkSay('Restored '+counts(db)+'.');
 }
 
 /* ================= VENDORS ================= */
